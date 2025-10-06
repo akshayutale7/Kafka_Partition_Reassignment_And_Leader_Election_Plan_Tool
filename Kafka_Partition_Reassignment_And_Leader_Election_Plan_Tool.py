@@ -1,4 +1,12 @@
 #!/usr/bin/python3
+"""
+Kafka Partition Reassignment Plan Generator
+==========================================
+This script automatically generates a partition reassignment plan and leader election plan for Apache Kafka.
+------------------------------------------------------------------------------
+AUTHOR: Akshay Anil Utale (autale@confluent.io)
+------------------------------------------------------------------------------
+"""
 import subprocess
 import json
 import re
