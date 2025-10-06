@@ -3,7 +3,7 @@
 This Python utility simplifies the process of generating Kafka partition reassignment plans and preferred leader election plans. Designed for administrators, it provides a guided interactive experience to rebalance topics and promote preferred brokers, with robust logging and validation for safe, controlled operations.
 
 ---
-## ## Features
+## Features
 
 * **Interactive CLI Workflow**: Prompts users to input connection settings, filters, and confirmations throughout all steps.
 * **Topic Filtering & Analysis**: Connects to a Kafka cluster, describes topics/partitions, and classifies topics as custom or internal.
@@ -15,7 +15,7 @@ This Python utility simplifies the process of generating Kafka partition reassig
 * **Automatic Data Refresh**: Refresh Kafka topic metadata and continue workflow as needed.
 
 ---
-## ## Requirements
+## Requirements
 
 * Python 3.6+
 * Kafka CLI Tools installed and on your `PATH` (`kafka-topics`, `kafka-reassign-partitions`, `kafka-leader-election`)
@@ -23,7 +23,7 @@ This Python utility simplifies the process of generating Kafka partition reassig
 * Client Config File (e.g., SASL/SSL properties if required for authentication)
 
 ---
-## ## Usage
+## Usage
 
 1.  Launch the script from your terminal:
     ```bash
@@ -44,7 +44,7 @@ This Python utility simplifies the process of generating Kafka partition reassig
 Each plan is exported as JSON files (e.g., `reassign-partitions-plan.json`, `leader-election-plan.json`) ready for use with the Kafka CLI tools.
 
 ---
-## ## Example Workflow
+## Example Workflow
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -81,12 +81,12 @@ Action: Build a reassign partitions plan
 ```
 You will be prompted for inputs and confirmation before any changes, with clear instructions on what to do next.
 
-## ## Output Files
+## Output Files
 * kafka_script.log: Detailed session and operation logs.
 * reassign-partitions-plan.json: Partition reassignment plan.
 * leader-election-plan.json: Leader election plan (if applicable).
 
-## ## Recommended Kafka CLI Usage
+## Recommended Kafka CLI Usage
 After plan generation, run commands like:
 ```bash
 kafka-reassign-partitions --bootstrap-server <host:port> --command-config <client.properties> --reassignment-json-file reassign-partitions-plan.json --execute
@@ -95,10 +95,10 @@ kafka-leader-election --bootstrap-server <host:port> --command-config <client.pr
 ```
 Follow the on-screen "NEXT STEPS" instructions output by the script.
 
-## ## Notes
+## Notes
 * The tool does not directly modify your Kafka cluster. It only generates JSON plans. Execution is delegated to the Kafka CLI.
 * All interactive prompts are safeguarded against accidental exit or invalid input.
 * Plan generation ensures replica diversity and validates broker assignments for operational safety.
 
-## ## Troubleshooting
+## Troubleshooting
 If topic metadata cannot be loaded, or if any command fails, errors will be displayed and saved to kafka_script.log. Review the log file for detailed diagnostics.
