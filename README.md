@@ -78,3 +78,32 @@ Choose [1/2/3]:
 
 Action: Build a reassign partitions plan
 [... outputs summary, asks for confirmation, writes plan file, shows next steps ...]
+
+You will be prompted for inputs and confirmation before any changes, with clear instructions on what to do next.
+
+Output Files
+kafka_script.log: Session history and detailed logs
+reassign-partitions-plan.json: Partition reassignment plan for use with Kafka CLI tools
+leader-election-plan.json: Leader election plan file (if generated)
+
+Output Files
+kafka_script.log: Detailed session and operation logs.
+reassign-partitions-plan.json: Partition reassignment plan.
+leader-election-plan.json: Leader election plan (if applicable).
+
+Recommended Kafka CLI Usage
+After plan generation, run commands like:
+
+kafka-reassign-partitions --bootstrap-server <host:port> --command-config <client.properties> --reassignment-json-file reassign-partitions-plan.json --execute
+kafka-reassign-partitions --bootstrap-server <host:port> --command-config <client.properties> --reassignment-json-file reassign-partitions-plan.json --verify
+kafka-leader-election --bootstrap-server <host:port> --command-config <client.properties> --path-to-json-file leader-election-plan.json --election-type preferred
+bash
+
+Follow the on-screen "NEXT STEPS" instructions output by the script.
+
+Notes
+The tool does not directly modify your Kafka cluster. It only generates JSON plans. Execution is delegated to the Kafka CLI.
+All interactive prompts are safeguarded against accidental exit or invalid input.
+Plan generation ensures replica diversity and validates broker assignments for operational safety.
+Troubleshooting
+If topic metadata cannot be loaded, or if any command fails, errors will be displayed and saved to kafka_script.log. Review the log file for detailed diagnostics.
