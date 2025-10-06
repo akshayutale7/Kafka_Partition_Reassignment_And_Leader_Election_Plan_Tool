@@ -97,8 +97,8 @@ Follow the on-screen "NEXT STEPS" instructions output by the script.
 
 ## Notes
 * The tool does not directly modify your Kafka cluster. It only generates JSON plans. Execution is delegated to the Kafka CLI.
-* All interactive prompts are safeguarded against accidental exit or invalid input.
 * Plan generation ensures replica diversity and validates broker assignments for operational safety.
+* Verify the output file before performing final execution.
 
 ## Troubleshooting
 If topic metadata cannot be loaded, or if any command fails, errors will be displayed and saved to kafka_script.log. Review the log file for detailed diagnostics.
