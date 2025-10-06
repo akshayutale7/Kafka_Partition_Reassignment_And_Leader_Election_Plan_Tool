@@ -78,7 +78,7 @@ Choose [1/2/3]:
 
 Action: Build a reassign partitions plan
 [... outputs summary, asks for confirmation, writes plan file, shows next steps ...]
-
+text```
 You will be prompted for inputs and confirmation before any changes, with clear instructions on what to do next.
 
 Output Files
