@@ -1,28 +1,59 @@
 # Kafka Partition Reassignment & Leader Election Plan Tool
 
-This Python utility simplifies the process of generating Kafka partition reassignment plans and preferred leader election plans. Designed for administrators, it provides a guided interactive experience to rebalance topics and promote preferred brokers, with robust logging and validation for safe, controlled operations.
+This Python-based CLI tool simplifies the process of generating **partition reassignment** and **preferred leader election plans** for Apache Kafka. 
 
----
+Designed for **Kafka Administrators** and **Technical Support Engineers**, it offers an interactive, safe, and guided workflow to generate a rebalance topic partitions and preferred leader election plan.
+
 ## Features
+- Interactive CLI Workflow: Guided, step-by-step prompts for Kafka connection, topic filtering, broker selection, and plan export.
+- Topic Filtering & Analysis: Fetches metadata and auto-classifies topics as internal or custom-defined.
+- Partition Reassignment Plan Generator: Randomly redistributes partition replicas and exports Kafka-compatible JSON plans for balancing or broker decommissioning.
 
-* **Interactive CLI Workflow**: Prompts users to input connection settings, filters, and confirmations throughout all steps.
-* **Topic Filtering & Analysis**: Connects to a Kafka cluster, describes topics/partitions, and classifies topics as custom or internal.
-* **Partition Reassignment Plan Generator**: Randomly redistributes replicas among available brokers, exporting plans in Kafka compatible JSON.
-* **Preferred Leader Election Plan**: Lets you select a broker as preferred leader for filtered topics/partitions and generates required plan files.
-* **Next Steps & CLI Guidance**: Prints explicit command lines and guidance to use with standard Kafka tools (`kafka-reassign-partitions`, `kafka-leader-election`, etc.).
-* **Comprehensive Logging**: All actions, warnings, and errors are logged to `kafka_script.log` with timestamps.
-* **User Safety**: Extensive input validation, confirmation prompts, and graceful exit handling on cancellation or errors.
-* **Automatic Data Refresh**: Refresh Kafka topic metadata and continue workflow as needed.
+⭐ Preferred Leader Election Plan
 
----
-## Requirements
+Generates leader election plans targeting preferred brokers, compatible with Kafka CLI and Admin APIs.
 
-* Python 3.6+
-* Kafka CLI Tools installed and on your `PATH` (`kafka-topics`, `kafka-reassign-partitions`, `kafka-leader-election`)
-* Kafka Cluster Access (with appropriate permissions)
-* Client Config File (e.g., SASL/SSL properties if required for authentication)
+📄 Next Steps & CLI Guidance
 
----
+Prints ready-to-use Kafka commands for applying reassignment and leader election plans.
+
+📝 Comprehensive Logging
+
+Logs all actions, errors, and warnings with timestamps to kafka_script.log.
+
+✅ Safe & Controlled Operations
+
+Validates inputs, confirms actions, and exits gracefully on user cancellation or error.
+
+🔄 Automatic Metadata Refresh
+
+Refreshes topic and broker metadata on demand to reflect real-time cluster state.
+
+## 📌 Why Use This Tool?
+
+Managing partition placement and broker leadership in Kafka via manual JSON editing or shell scripts is time-consuming and error-prone. This tool provides:
+
+- A **guided, repeatable workflow**
+- Output fully compatible with Kafka CLI tools
+- **Built-in safety checks** and validation
+- Helpful for **broker decommission**, **cluster rebalancing**, and **support troubleshooting**
+
+## 🛠️ Requirements
+
+- **Python 3.6+**
+
+- **Kafka CLI Tools** installed and available in your `PATH`. To use Kafka CLI tools like `kafka-reassign-partitions.sh` or `kafka-leader-election.sh`, ensure the Kafka `bin` directory is included in your system's `PATH`.
+    > Setting Up Kafka CLI Tools in Your PATH (Linux/macOS)
+    >  #### 🔄 For the Current Terminal Session
+    > - ``` export PATH=/path/to/kafka/bin:$PATH ``` This change applies only to the current terminal session.
+    > #### ♾️ To Make It Permanent (All Sessions)
+    > Add the export line to your shell configuration file (e.g., ~/.bashrc or ~/.zshrc):
+    > - ``` echo 'export PATH=/path/to/kafka/bin:$PATH' >> ~/.bashrc ```
+    > - ``` source ~/.bashrc ``` (For zsh users, replace `~/.bashrc` with `~/.zshrc`.)
+    > - 🔁 Note: Replace `/path/to/kafka/bin` with the actual path where Kafka binaries is installed. Example: `export PATH=/opt/confluent/bin:$PATH`
+- **Kafka Cluster Access (with appropriate permissions)**
+- **Client Configuration File:** If authentication is required (e.g., `SASL/SSL`), ensure you have the appropriate Kafka client config properties file.
+
 ## Usage
 
 1.  Launch the script from your terminal:
@@ -43,7 +74,6 @@ This Python utility simplifies the process of generating Kafka partition reassig
 
 Each plan is exported as JSON files (e.g., `reassign-partitions-plan.json`, `leader-election-plan.json`) ready for use with the Kafka CLI tools.
 
----
 ## Example Workflow
 
 ```text
