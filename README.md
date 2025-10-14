@@ -34,7 +34,7 @@ Designed for Kafka Administrators and Technical Support Engineers, it offers a s
 
 1.  Launch the script from your terminal:
     ```bash
-    python3 kafka_partition_reassignment_tool.py
+    python3 Kafka_Partition_Reassignment_And_Leader_Election_Plan_Tool.py
     ```
 
 2.  Upon launch, you will be prompted to:
