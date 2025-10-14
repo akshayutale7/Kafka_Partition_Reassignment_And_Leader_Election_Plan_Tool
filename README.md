@@ -1,44 +1,20 @@
 # Kafka Partition Reassignment & Leader Election Plan Tool
 
-This Python-based CLI tool simplifies the process of generating **partition reassignment** and **preferred leader election plans** for Apache Kafka. 
+## Description:
 
-Designed for **Kafka Administrators** and **Technical Support Engineers**, it offers an interactive, safe, and guided workflow to generate a rebalance topic partitions and preferred leader election plan.
+In Kafka, managing partition reassignments and broker leadership manually by creating JSON files or creating a new scripts every time is often time-consuming and error-prone. This Python-based CLI tool streamlines the process by enabling the generation of **partition reassignment** and **preferred leader election** plans with ease and accuracy.
 
-## Features
-- Interactive CLI Workflow: Guided, step-by-step prompts for Kafka connection, topic filtering, broker selection, and plan export.
-- Topic Filtering & Analysis: Fetches metadata and auto-classifies topics as internal or custom-defined.
-- Partition Reassignment Plan Generator: Randomly redistributes partition replicas and exports Kafka-compatible JSON plans for balancing or broker decommissioning.
+Designed for Kafka Administrators and Technical Support Engineers, it offers a safe, interactive, and guided workflow to efficiently rebalance topic partitions and manage broker leadership.
 
-⭐ Preferred Leader Election Plan
+## Key features:
+- Guided, step-by-step prompts on CLI for Kafka connection, topic filtering, broker selection, and plan export.
+- Fetches metadata and auto-classifies topics as internal or custom-defined.
+- Randomly redistributes partition replicas and exports the plan in Kafka-compatible JSON file.
+- Generates leader election plans targeting preferred brokers, compatible with Kafka CLI and Admin APIs.
+- Prints ready-to-use Kafka commands for applying reassignment and leader election plans.
+- Logs all actions, errors, and warnings with timestamps to kafka_script.log.
 
-Generates leader election plans targeting preferred brokers, compatible with Kafka CLI and Admin APIs.
-
-📄 Next Steps & CLI Guidance
-
-Prints ready-to-use Kafka commands for applying reassignment and leader election plans.
-
-📝 Comprehensive Logging
-
-Logs all actions, errors, and warnings with timestamps to kafka_script.log.
-
-✅ Safe & Controlled Operations
-
-Validates inputs, confirms actions, and exits gracefully on user cancellation or error.
-
-🔄 Automatic Metadata Refresh
-
-Refreshes topic and broker metadata on demand to reflect real-time cluster state.
-
-## 📌 Why Use This Tool?
-
-Managing partition placement and broker leadership in Kafka via manual JSON editing or shell scripts is time-consuming and error-prone. This tool provides:
-
-- A **guided, repeatable workflow**
-- Output fully compatible with Kafka CLI tools
-- **Built-in safety checks** and validation
-- Helpful for **broker decommission**, **cluster rebalancing**, and **support troubleshooting**
-
-## 🛠️ Requirements
+## Requirements
 
 - **Python 3.6+**
 
@@ -112,9 +88,10 @@ Action: Build a reassign partitions plan
 You will be prompted for inputs and confirmation before any changes, with clear instructions on what to do next.
 
 ## Output Files
-* kafka_script.log: Detailed session and operation logs.
-* reassign-partitions-plan.json: Partition reassignment plan.
-* leader-election-plan.json: Leader election plan (if applicable).
+* reassign-partitions-plan.json
+* reassign-partitions-for-leader-plan.json
+* leader-election-plan.json
+* kafka_script.log
 
 ## Recommended Kafka CLI Usage
 After plan generation, run commands like:
@@ -123,12 +100,16 @@ kafka-reassign-partitions --bootstrap-server <host:port> --command-config <clien
 kafka-reassign-partitions --bootstrap-server <host:port> --command-config <client.properties> --reassignment-json-file reassign-partitions-plan.json --verify
 kafka-leader-election --bootstrap-server <host:port> --command-config <client.properties> --path-to-json-file leader-election-plan.json --election-type preferred
 ```
+- `--election-type <[PREFERRED, UNCLEAN]>` (required): Specifies the type of leader election to perform.
+ > - `PREFERRED`: Elects the preferred leader **only if** the current leader is not the preferred one for the topic partition.
+ > - `UNCLEAN`: Elects any available leader **only if** there is currently **no leader** for the topic partition.
+
 Follow the on-screen "NEXT STEPS" instructions output by the script.
 
 ## Notes
-* The tool does not directly modify your Kafka cluster. It only generates JSON plans. Execution is delegated to the Kafka CLI.
-* Plan generation ensures replica diversity and validates broker assignments for operational safety.
-* Verify the output file before performing final execution.
+* This tool does not make direct changes to your Kafka cluster. The tool generates plans but does not execute the commands automatically.
+* It enables you to review and confirm the plans first. After verification, follow the instructions in the "Next Steps" section at the end of the script to proceed.
+* Always review the output file carefully before carrying out the final execution.
 
 ## Troubleshooting
 If topic metadata cannot be loaded, or if any command fails, errors will be displayed and saved to kafka_script.log. Review the log file for detailed diagnostics.
