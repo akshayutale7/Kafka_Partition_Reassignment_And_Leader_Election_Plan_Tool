@@ -28,7 +28,7 @@ def log_error(msg): print(msg); logging.error(msg)
 def log_warn(msg): print(msg); logging.warning(msg)
 def log_to_file_only(msg): logging.info(msg)
 
-def handle_exit(message="Exiting script. Goodbye!"):
+def handle_exit(message="Exiting script. Please find the generated files under current working directory. Goodbye!"):
     """Prints a goodbye message and exits the script cleanly."""
     print(f"\n\n{message}")
     logging.info(message)
